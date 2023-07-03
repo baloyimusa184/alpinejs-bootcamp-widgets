@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="functions.js"></script>
+    <script src="T_Fee.js"></script>
+   <script src="phone_Bill.js"></script>
+   <script src="enoughAir.js"></script>
+</head>
+<body>
+
+    <h1>Greeting with english and foreign languages</h1>
+    <div x-data="{
+                  name: '',
+
+                  message1: english(name),
+
+                  showMessage1: false,
+
+                  message2: french(name),
+
+                  showMessage2: false,
+
+                  message3: spanish(name),
+
+                  showMessage3: false
+    }">
+
+    <input x-model="name" type="text" placeholder="Enter your name">
+    <button @click="message1=english(name); showMessage1=!showMessage1">English</button>
+    <button @click="message2=french(name); showMessage2=!showMessage2">French</button>
+    <button @click="message3=spanish(name); showMessage3=!showMessage3">Spanish</button>
+    
+    <div x-show="showMessage1">
+        <p x-text="message1"></p>
+    </div>
+
+    <div x-show="showMessage2">
+        <p x-text="message2"></p>
+    </div>
+
+    <div x-show="showMessage3">
+        <p x-text="message3"></p>
+    </div>
+    </div>
+
+    <hr><br>
+
+<!--Transport for different shifts-->    
+    <h2>Transport fee for appropriate shifts</h2>
+
+ <div x-data="{
+    morningF: morningFee(),
+    showMorningFee: false,
+
+    afternoonF: afterNoon(),
+    showAfternoon: false,
+
+    nightF: nightFee(),
+    showNight: false
+
+ }">
+
+ <button @click="morningF=morningFee(); showMorningFee=!showMorningFee">morning shift</button>
+ <button @click="afternoonF=afterNoon(); showAfternoon=!showAfternoon">afternoon shift</button>
+ <button @click="nightF=nightFee(); showNight=!showNight">night shift</button>
+ <div x-show="showMorningFee">
+    <p x-text="morningF"></p>
+ </div>
+
+ <div x-show="showAfternoon">
+    <p x-text="afternoonF"></p>
+ </div>
+
+ <div x-show="showNight">
+    <p x-text="nightF"></p>
+ </div>
+</div>
+
+<hr><br>
+
+<h3>Total phone bill</h3>
+
+<div x-data="{ 
+              smsCount: 3, 
+              callCount: 2, 
+              totalCost: 0,
+              cost: calculateTotalCost,
+              showTot: false
+
+}">
+    <button @click="calculateTotalCost; showTot=!showTot">Calculate Total</button>
+    <div x-show="showTot">
+        <p>Total Cost: R<span x-text="totalCost.toFixed(2)"></span></p> 
+    </div>  
+  </div>
+<hr><br>
+
+<div x-data="{ usageString: '', amount: 0, projectedCost: 0 }">
+    <input x-model="usageString" type="text" placeholder="Enter usage string">
+    <input x-model="amount" type="number" placeholder="Enter amount">
+    <button @click="projectedCost = calculateProjectedCost()">Calculate</button>
+    <p x-show="projectedCost !== 0">Projected Airtime Usage: R<span x-text="projectedCost.toFixed(2)"></span></p>
+  </div>
+
+
+</body>
+</html>
